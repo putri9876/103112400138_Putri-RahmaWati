@@ -120,10 +120,10 @@ int main() {
 
 ##### Output 1
 
-![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-Rahma-Wati/blob/main/Pertemuan1_Modul1/Output-Unguided1-1.png)
+![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/Pertemuan1_Modul1/Output-Unguided1-1.png)
 
 ##### Output 2
-![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-Rahma-Wati/blob/main/Pertemuan1_Modul1/Output-Unguided1-2.png)
+![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/Pertemuan1_Modul1/Output-Unguided1-2.png)
 
 penjelasan unguided 1 
 Program ini meminta memasukan bilangan pecahan lalu program akan menghitung dan menampilkan penjumlahan,pengurangan,perkalian, dan pembagian.
@@ -174,10 +174,10 @@ return 0;
 ### Output Unguided 2 :
 
 ##### Output 1
-![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-Rahma-Wati/blob/main/Pertemuan1_Modul1/Output-Unguided2-1.png)
+![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/Pertemuan1_Modul1/Output-Unguided2-1.png)
 
 ##### Output 2
-![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-Rahma-Wati/blob/main/Pertemuan1_Modul1/Output-Unguided2-2.png)
+![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/Pertemuan1_Modul1/Output-Unguided2-2.png)
 penjelasan unguided 2
 Program ini mengubah angka 0–100 menjadi sebuah teks dan diminta memasukkan angka, dan program akan mengubah sebuah angka menjadi kata-kata seperti 17 akan menjadi "tujuh belas"
 
@@ -228,10 +228,10 @@ int main() {
 ### Output Unguided 3 :
 
 ##### Output 1
-![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-Rahma-Wati/blob/main/Pertemuan1_Modul1/Output-Unguided3-1.png)
+![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/Pertemuan1_Modul1/Output-Unguided3-1.png)
 
 ##### Output 2
-![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-Rahma-Wati/blob/main/Pertemuan1_Modul1/Output-Unguided3-2.png)
+![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/Pertemuan1_Modul1/Output-Unguided3-2.png)
 
 penjelasan unguided 3
 Program ini mencetak pola angka berbentuk segitiga terbalik dengan simbol * di tengah. Pengguna memasukkan tinggi piramida n, lalu program menggunakan loop untuk setiap baris, mencetak spasi di kiri agar pola rapi, angka menurun dari i ke 1 di kiri simbol *, simbol * di tengah, dan angka meningkat dari 1 ke i di kanan simbol *. Setelah semua baris selesai, program menampilkan satu * di tengah bawah sebagai puncak terakhir pola.
