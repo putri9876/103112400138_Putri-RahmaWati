@@ -1,0 +1,424 @@
+# <h1 align="center">Laporan Praktikum Modul 2 - array & Pengenalan Bahas C++ (Bagian kedua)</h1>
+<p align="center"> Putri Rahma Wati 103112400138 </p>
+
+## Dasar Teori
+array dapat menyederhanakan kode, meningkatkan efisiensi, dan mengoptimalkan manajemen data. Diharapkan hasil pengabdian ini akan memberikan manfaat bagi masyarakat dengan meningkatkan pemahaman mereka tentang penggunaan array dalam bahasa pemrograman. [1]
+operasi aritmatika, operasi percabangan, operasi
+perulangan, array dan Function. Menu pengenalan C++ memiliki empat sub menu
+yang terdiri dari sejarah C++, variabel dan konstanta, struktur bahasa C++, input dan
+output. Selain itu terdapat beberapa tombol lainnya seperti compiler, utama, latihan
+soal, materi dan petujuk penggunaan. Untuk keluar dari sistem bisa menekan tombol
+keluar.[2]
+Inisialisasi Array Dimensi Satu inisialisasi adalah memberikan nilai awal terhadap suatu variabel. Bentuk pendefenisian Array Dimensi Satu :
+-Bentuk umum larik satu dimensi dideklarasikan dengan tipe_data menyatakan jenis elemen larik (int, float, char, unsigned, dan lain-lain), tidak berjenis void.
+-nama_array adalah nama array, harus memenuhi ketentuan pengenal.
+-Ukuran menyatakan jumlah maksimal elemen array, normalnya lebih besar dari satu. [3]
+
+
+### A. ...<br/>
+#### 1. Deklarasi Array → langkah untuk membuat array dengan menentukan tipe data, nama, dan jumlah elemen.
+#### 2. Inisialisasi Array → memberi nilai awal ke dalam elemen array saat dibuat.
+#### 3. Akses Elemen Array → mengambil atau menampilkan nilai dari array menggunakan nomor indeks (mulai dari 0).
+
+## Guided 
+
+### 1. Array 
+```C++
+source code guided 1
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[5];
+
+    for (int i= 0;i<5;i++) {
+        cout << "Masukkan value indeks ke-" << i << " : ";
+        cin >> arr[i];
+    }
+    int j = 0;
+    while(j<5) {
+        cout << "isi indeks ke-" << j << " : " << arr[j] << endl;
+        j++;
+    }
+    return 0;
+}
+penjelasan singkat guided 1
+Program menggunakan array untuk menyimpan lima angka yang dimasukan oleh pengguna melalui perulangan for, kemudian menampilkan kembali seluruh isi array tersebut dengan perulangan while.
+### 2. Array  2 dimensi 
+```C++
+source code guided 2
+#include <iostream>
+using namespace std;
+void tampilkanHasil(int arr[2][2]){
+    for (int i = 0; i < 2; i++){
+        for(int j = 0; j<2; j++) {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    };
+}
+int main() {
+    int arrA[2][2]= {
+        (1,2),
+        (3,4)
+    };
+    int arrB[2][2] = {
+        (2,3),
+        (4,5)
+    };
+    int arrC[2][2] = {0};
+    int arrD[2][2] = {0};
+
+
+    //penjumalahan matriks 2x2
+    for(int i = 0; i < 2; i++) {                    //perulangan baris
+        for(int j = 0; j < 2; j++){                 //perulangan kolom
+            arrC[i][j] = arrA[i][j] + arrB[i][j];   //perulangan
+        }
+    }
+    cout << "Hasil penjumlahan : " << endl;
+    tampilkanHasil(arrC);
+    cout << endl;
+
+    //perkalian matriks 2x2
+    for (int i = 0; i < 2; i++){
+        for( int j = 0; j < 2; j++) {
+            for (int k = 0; k < 2; k++) {
+                arrD[i][j] = arrA[i][k] + arrB[k][j];
+            }
+        }
+    }
+    cout << "hasil perkalian : " << endl;
+    tampilkanHasil (arrD);
+    return 0;
+}
+penjelasan singkat guided 2
+Program ini membuat matriks 2x2, lalu menghitung hasil penjumlahan dan perkaliannya dan menampilkan hasilnya lewat fungsi tampilkanHasil; penjumlahan dilakukan dengan menambahkan yang posisinya di kedua matriks.
+### 3. Pointer dan Array
+
+```C++
+source code guided 3
+#include <iostream>
+using namespace std;
+
+void tukar(int *x, int *y) {
+    int temp;
+    temp = *x;
+    *x = *y;
+    *y = temp;
+}
+int main() {
+    int a = 20, b = 30;
+    int *ptr;
+
+    ptr = &a;
+
+    cout << "Value of a : " << a << endl;
+    cout << "Addres of : " << &a << endl;
+    cout << "Value stured in ptrs (address of a): " << ptr << endl;
+    cout << "Value pointed to by ptr : " << *ptr << endl;
+
+    tukar(&a, &b);
+    cout << "After swapping, value of a=" <<a << "and b=" << b << endl;
+    return 0;
+}
+penjelasan singkat guided 3
+Program ini menyimpan alamat dari a sehingga bisa menampilkan nilai a,alamat a,nilai yang ditunjuk oleh ptr, dan fungsi tukar yang menerima alamat a dan b untuk menukar nilainya menggunakan pointer, sehingga setelah pemanggilan fungsi nilai a dan b saling bertukar.
+### 4. Pointer dan String
+
+```C++
+source code guided 4
+#include <iostream>
+using namespace std;
+
+void tukar(int &x, int &y) {
+    int temp;
+    temp = x;
+    x = y;
+    y = temp;
+}
+int main() {
+    int a = 20, b = 30;
+    int &ref = a;
+
+    cout << "Value of a : " << a << endl;
+    cout << "Addres of : " << &a << endl;
+    cout << "Value stured in ptrs (address of a): " << ref << endl;
+    cout << "Value pointed to by ptr : " << &ref << endl;
+
+    //menguah nilai a lewat refrence
+    ref = 50;
+    cout << "\nSetelah ref = 50;" << endl;
+    cout << "Nilai a:" << endl;
+    cout << "Nilai ref: " << ref << endl;
+
+    tukar(a, b);
+    cout << "After swapping, value of a=" <<a << "and b=" << b << endl;
+    return 0;
+}
+penjelasan singkat guided 4
+
+Program ini memakai reference sebagai alias variabel sehingga perubahan lewat ref langsung mengubah a dengan fungsi tukar nilai a,b bisa di tukar tanpa pointer.
+
+### 5. Parameter Fungsi
+
+```C++
+source code guided 5
+#include <iostream>
+using namespace std;
+
+int cariMax(int arr[], int ukuran) {
+    int MAX = arr[0];
+    for(int i = 1; i < ukuran; i++) {
+        if (arr[i] > MAX){
+            MAX = arr[i];
+        }
+    }
+    return MAX;
+}
+void operasiAritmatika(int arr[], int ukuran) {
+    int totalJumlah = 0;
+    for( int i =0; i < ukuran; i++) {
+        totalJumlah += arr[i];
+    }
+    cout << "total penjumlahan : " << totalJumlah << endl;
+
+    int totalKali = 1;
+    for(int i = 0; i < ukuran; i++) {
+        totalKali *= arr[i];
+    }
+    cout << "total perkalian : " << totalKali << endl;
+}
+int main(){
+    const int ukuran = 5;
+    int arr[ukuran];
+    for(int i = 0; i < ukuran; i++){
+        cout << "masukkan nilai array ke-" << i << " : ";
+    }
+    cout << endl;
+    cout << "nilai terbesar dalam array : " << cariMax(arr, ukuran) << endl;
+    operasiAritmatika(arr, ukuran);
+    return 0;
+}
+penjelasan singkat guided 5
+Program ini membaca elemen array dan mencari nilai terbesar dengan fungsi cariMax dan menghitung jumlah semua elemen dan hasil perkalian lewat fungsi operasiAritmatika.
+
+## Unguided 
+
+### 1. Buatlah program yang dapat melakukan operasi penjumlahan, pengurangan, dan 
+perkalian matriks 3x3 
+
+```C++
+source code unguided 1
+```
+#include <iostream>
+using namespace std;
+
+void tampilkanHasil(int arr[3][3]){
+    for (int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++) {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    int arrA[3][3], arrB[3][3];
+    int arrC[3][3] = {0}; 
+    int arrD[3][3] = {0}; 
+    int arrE[3][3] = {0}; 
+
+    cout << "Masukkan matriks A 3x3:" << endl;
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            cin >> arrA[i][j];
+        }
+    }
+
+    cout << "Masukkan matriks B 3x3:" << endl;
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            cin >> arrB[i][j];
+        }
+    }
+
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            arrC[i][j] = arrA[i][j] + arrB[i][j];
+        }
+    }
+
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            arrD[i][j] = arrA[i][j] - arrB[i][j];
+        }
+    }
+
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            for(int k = 0; k < 3; k++){
+                arrE[i][j] += arrA[i][k] * arrB[k][j];
+            }
+        }
+    }
+
+    cout << "\nHasil Penjumlahan:" << endl;
+    tampilkanHasil(arrC);
+
+    cout << "\nHasil Pengurangan:" << endl;
+    tampilkanHasil(arrD);
+
+    cout << "\nHasil Perkalian:" << endl;
+    tampilkanHasil(arrE);
+
+    return 0;
+}
+
+### Output Unguided 1 :
+##### Output 1
+![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/output1-unguided1-1.png)
+
+##### Output 2
+![Screenshot Output Unguided 1_2](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/output2-unguided1-2.png)
+
+penjelasan unguided 1 
+Program di atas adalah implementasi operasi matriks 3x3 dengan input dari user. Pertama, user diminta memasukkan elemen-elemen matriks A dan B, lalu program menghitung tiga hasil: penjumlahan (arrC = A + B), pengurangan (arrD = A – B), dan perkalian matriks (arrE = A × B) menggunakan perulangan bersarang. Hasil dari tiap operasi kemudian ditampilkan dengan fungsi tampilkanHasil() yang mencetak isi matriks dalam bentuk matriks 3x3.
+
+### 2. Berdasarkan guided pointer dan reference sebelumnya, buatlah keduanya dapat 
+menukar nilai dari 3 variabel 
+
+```C++
+source code unguided 2
+```
+#include <iostream>
+using namespace std;
+
+void tukarPointer(int *x, int *y, int *z) {
+    int temp = *x;
+    *x = *y;
+    *y = *z;
+    *z = temp;
+}
+void tukarReference(int &x, int &y, int &z) {
+    int temp = x;
+    x = y;
+    y = z;
+    z = temp;
+}
+int main() {
+    int a, b, c;
+    int x, y, z;
+    cout << "Masukkan nilai untuk a, b, c: ";
+    cin >> a >> b >> c;
+    cout << "Masukkan nilai untuk x, y, z: ";
+    cin >> x >> y >> z;
+    cout << "\n Pointer" << endl;
+    cout << "Sebelum swap: a = " << a << ", b = " << b << ", c = " << c << endl;
+    tukarPointer(&a, &b, &c);
+    cout << "Setelah swap: a = " << a << ", b = " << b << ", c = " << c << endl;
+    cout << "\n Reference" << endl;
+    cout << "Sebelum swap: x = " << x << ", y = " << y << ", z = " << z << endl;
+    tukarReference(x, y, z);
+    cout << "Setelah swap: x = " << x << ", y = " << y << ", z = " << z << endl;
+
+    return 0;
+}
+
+
+### Output Unguided 2 :
+
+##### Output 1
+![Screenshot Output Unguided 2_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/output1-unguided2-1.png)
+
+##### Output 2
+![Screenshot Output Unguided 2_2](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/output2-unguided2-2.png)
+
+penjelasan unguided 2
+Program di atas menunjukkan keduanya sama-sama bisa menukar nilai dari 3 variabel, tapi cara kerjanya berbeda:
+Pointer bekerja dengan alamat memori. Fungsi tukarPointer() menerima alamat variabel (&a, &b, &c), lalu menggunakan operator * (dereference) untuk mengakses dan mengubah isi variabel tersebut. sedangkan Reference Fungsi tukarReference() tidak perlu pakai tanda * atau & saat digunakan, karena parameter referensi otomatis mereferensikan variabel asli.
+
+### 3. Diketahui sebuah array 1 dimensi sebagai berikut :  
+arrA = {11, 8, 5, 7, 12, 26, 3, 54, 33, 55} 
+Buatlah program yang dapat mencari nilai minimum, maksimum, dan rata – rata dari 
+array tersebut! Gunakan function cariMinimum() untuk mencari nilai minimum dan 
+function cariMaksimum() untuk mencari nilai maksimum, serta gunakan prosedur 
+hitungRataRata() untuk menghitung nilai rata – rata! Buat program menggunakan 
+menu switch-case seperti berikut ini :
+--- Menu Program Array --- 
+1. Tampilkan isi array 
+2. cari nilai maksimum 
+3. cari nilai minimum 
+4. Hitung nilai rata - rata
+
+```C++
+source code unguided 3
+```
+#include <iostream>
+using namespace std;
+
+int cariMinimum(int arr[], int ukuran) {
+    int min = arr[0];
+    for (int i = 1; i < ukuran; i++) {
+        if (arr[i] < min) {
+            min = arr[i];
+        }
+    }
+    return min;
+}
+
+int cariMaksimum(int arr[], int ukuran) {
+    int maks = arr[0];
+    for (int i = 1; i < ukuran; i++) {
+        if (arr[i] > maks) {
+            maks = arr[i];
+        }
+    }
+    return maks;
+}
+
+void hitungRataRata(int arr[], int ukuran) {
+    int total = 0;
+    for (int i = 0; i < ukuran; i++) {
+        total += arr[i];
+    }
+    double rata = (double) total / ukuran;
+    cout << "Nilai rata-rata array = " << rata << endl;
+}
+
+int main() {
+    int arrA[] = {11, 8, 5, 7, 12, 26, 3, 54, 33, 55};
+    int ukuran = sizeof(arrA) / sizeof(arrA[0]);
+
+    cout << "Isi array: ";
+    for (int i = 0; i < ukuran; i++) {
+        cout << arrA[i] << " ";
+    }
+    cout << endl;
+
+    cout << "Nilai maksimum = " << cariMaksimum(arrA, ukuran) << endl;
+    cout << "Nilai minimum = " << cariMinimum(arrA, ukuran) << endl;
+    hitungRataRata(arrA, ukuran);
+
+    return 0;
+}
+
+### Output Unguided 3 :
+##### Output 1
+![Screenshot Output Unguided 3_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/output1-unguided3-1.png)
+
+##### Output 2
+![Screenshot Output Unguided 3_2](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/output2-unguided3-2.png)
+
+penjelasan unguided 3
+Program di atas digunakan untuk mencari nilai maksimum, minimum, dan rata-rata dari sebuah array. array arrA berisi 10 elemen, lalu fungsi cari maksimum() mencari array untuk menemukan nilai terbesar, fungsi cari minimum() mencari nilai terkecil, dan prosedur hitungRataRata() menghitung rata-rata dengan menjumlahkan semua elemen lalu dibagi jumlah elemen. hasil akhirnya ditampilkan bersama isi array.
+## Kesimpulan
+Dari ketiga program dapat disimpulkan dapat berbagai cara untuk mengolah data, mulai dari penggunaan array 1D dan 2D untuk operasi matematis seperti mencari nilai maksimum, minimum, rata-rata, hingga penjumlahan, pengurangan, dan perkalian matriks, serta konsep pointer dan reference yang memungkinkan manipulasi variabel baik melalui alamat memori maupun alias variabel langsung.
+
+## Referensi
+
+[1] Gema, R. L., Pratiwi, M., Zain, R. H., & Sovia, R. (2023). Introduction to the Concept and Practice of Using Arrays in Programming Languages​​ at Senior High School 2 Gunung Talang, Solok Regency: Pengenalan Konsep dan Praktik Penggunaan Array pada Bahasa Pemrograman di SMA 2 Gunung Talang Kabupaten Solok. Journal of Community Service and Application of Science, 2(2), 64-69. 
+
+[2] Dewi, L. J. E. (2010). Media Pembelajaran Bahasa Pemrograman C++. Jurnal Pendidikan Teknologi dan Kejuruan, 7(1).
+
+[3] Anita Sindar, R. M. S. (2019). Struktur Data Dan Algoritma Dengan C++ (Vol. 1). CV. AA. RIZKY.
