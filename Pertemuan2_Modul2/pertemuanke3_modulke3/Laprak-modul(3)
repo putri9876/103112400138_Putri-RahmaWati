@@ -1,0 +1,321 @@
+# <h1 align="center">Laporan Praktikum Modul 3 - ADT </h1>
+<p align="center"> Putri Rahma Wati 103112400138 </p>
+
+## Dasar Teori
+Abstract Data Type (ADT) adalah model logis dari struktur data yang berfokus pada apa yang dilakukan struktur data tersebut, bukan bagaimana hal itu diimplementasikan. Inti dari ADT adalah abstraksi dan enkapsulasi; ADT menyembunyikan detail implementasi internal (seperti menggunakan array atau linked list) dari pengguna, dan hanya mengekspos serangkaian operasi atau metode yang dapat digunakan untuk memanipulasi data. Pendekatan ini memastikan modularity yang tinggi, memudahkan pemeliharaan kode, dan mendukung perluasan sistem tipe.[1]
+
+### A. ...<br/>
+...
+#### 1.Fokus pada model logis dan perilaku data tanpa memperhatikan detail memori atau implementasi.
+
+
+## Guided 
+
+### 1. guided 1
+
+```C++
+source code guided 1
+```
+#include <iostream>
+using namespace std;
+
+struct mahasiswa{
+    string nama;
+    float nilai1, nilai2;
+};
+
+void inputMhs(mahasiswa &m){
+    cout << "Masukkan nama mahasiswa : ";
+    cin >> m.nama;
+    cout << "masukkan nilai 1 : ";
+    cin >> m.nilai1;
+    cout << "masukkan nilai 2 : ";
+    cin >> m.nilai2;
+}
+
+float rata2(mahasiswa m){
+    return float(m.nilai1 + m.nilai2)/2;
+}
+
+int main(){
+    mahasiswa mhs; //pemanggilan struct ADT
+    inputMhs(mhs); //pemanggilan prosedur
+    cout << "Rata-rata : " << rata2(mhs);   //pemanggilan function
+    return 0;
+}
+
+penjelasan singkat guided 1
+mendemonstrasikan ADT menggunakan struct mahasiswa untuk menyimpan nama dan dua nilai, dilengkapi dengan prosedur inputMhs untuk menerima data dan fungsi rata2 untuk menghitung rata-rata nilai.
+
+### 2. pelajaran.h
+```C++
+source code guided 2
+```
+#include <iostream>
+#include "pelajaran.h"
+using namespace std;
+
+int main() {
+    string namapel = "Struktur Data";
+    string kodepel = "STD";
+
+    pelajaran pel = create_pelajaran(namapel, kodepel);
+    tampil_pelajaran(pel);
+
+    return 0;
+}
+### 3. pelajaran.cpp
+```C++
+source code guided 3
+#include "pelajaran.h"
+
+//implementasi function create_pelajaran
+pelajaran create_pelajaran(string namaMapel, string kodepel) {
+    pelajaran p;
+    p.namaMapel = namaMapel;  //parameter lgsg dimasukin ke struct
+    p.kodeMapel = kodepel;
+    return p;
+}
+
+//implementasi prosedur tampil_pelajaran
+void tampil_pelajaran(pelajaran pel) { //pemanggilan menggunakan pel
+    cout << "nama pelajaran : " << pel.namaMapel << endl;
+    cout << "nilai : " << pel.kodeMapel << endl;
+}
+
+### 4. pelajaran.cpp
+```C++
+source code unguided 4
+```
+#include <iostream>
+#include "pelajaran.h"
+using namespace std;
+
+int main() {
+    string namapel = "Struktur Data";
+    string kodepel = "STD";
+
+    pelajaran pel = create_pelajaran(namapel, kodepel);
+    tampil_pelajaran(pel);
+
+    return 0;
+}
+penjelasan singkat guided 2,3,4
+menunjukkan praktik pemisahan kode pelajaran.h berisi deklarasi struct pelajaran dan prototipe fungsi, sedangkan pelajaran.cpp berisi implementasi lengkap dari fungsi create_pelajaran (untuk membuat objek struct) dan prosedur tampil_pelajaran (untuk menampilkan data), di mana file main Guided pelajaran.h, pelajaran.cpp, main.cpp bertindak sebagai driver yang memanggil fungsi-fungsi yang telah diimplementasikan tersebut.
+
+## Unguided 
+
+
+### 1.Buat program yang dapat menyimpan data mahasiswa (max. 10) ke dalam sebuah array dengan field nama, nim, uts, uas, tugas, dan nilai akhir. Nilai akhir diperoleh dari FUNGSI dengan rumus 0.3*uts+0.4*uas+0.3*tugas.
+
+```C++
+source code unguided 1
+```
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+struct Mahasiswa {
+    string nama;
+    string nim;
+    float uts;
+    float uas;
+    float tugas;
+    float nilai_akhir; 
+};
+
+float hitungNilaiAkhir(float uts, float uas, float tugas) {
+    return (0.3 * uts) + (0.4 * uas) + (0.3 * tugas);
+}
+
+void inputDataMahasiswa(Mahasiswa &mhs) {
+    cout << "Nama: ";
+    cin.ignore();
+    getline(cin, mhs.nama);
+    cout << "NIM: ";
+    cin >> mhs.nim;
+    cout << "Nilai UTS: ";
+    cin >> mhs.uts;
+    cout << "Nilai UAS: ";
+    cin >> mhs.uas;
+    cout << "Nilai Tugas: ";
+    cin >> mhs.tugas;
+
+    mhs.nilai_akhir = hitungNilaiAkhir(mhs.uts, mhs.uas, mhs.tugas);
+}
+
+void tampilkanData(const Mahasiswa &mhs) {
+    cout << "Nama: " << mhs.nama << endl;
+    cout << "NIM: " << mhs.nim << endl;
+    cout << "UTS: " << mhs.uts << endl;
+    cout << "UAS: " << mhs.uas << endl;
+    cout << "Tugas: " << mhs.tugas << endl;
+    cout << "Nilai Akhir: " << mhs.nilai_akhir << endl;
+}
+
+int main() {
+    Mahasiswa mhs_tunggal; 
+    inputDataMahasiswa(mhs_tunggal);
+    tampilkanData(mhs_tunggal);
+
+    return 0; 
+}
+### Output Unguided 1 :
+
+##### Output 1
+![Screenshotlatihan1_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/pertemuanke3_modulke3/outputunguided1_1.png)
+
+##### Output 2
+![Screenshotlatihan1_2](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/pertemuanke3_modulke3/outputunguided1_2.png)
+
+penjelasan unguided 1 
+ implementasi dasar Abstract Data Type ADT untuk satu mahasiswa, di mana struct Mahasiswa menyimpan data (nama, nim, uts, uas, tugas) dan sebuah fungsi terpisah (hitungNilaiAkhir) digunakan untuk menghitung nilai akhir dengan rumus 0.3×UTS+0.4×UAS+0.3×Tugas.
+
+### 2. (isi dengan soal unguided 2)
+
+```C++
+source code unguided 2 sama kaya guided 
+```
+### pelajaran.h
+```C++
+source code guided 2
+```
+#include <iostream>
+#include "pelajaran.h"
+using namespace std;
+
+int main() {
+    string namapel = "Struktur Data";
+    string kodepel = "STD";
+
+    pelajaran pel = create_pelajaran(namapel, kodepel);
+    tampil_pelajaran(pel);
+
+    return 0;
+}
+### pelajaran.cpp
+```C++
+source code guided 3
+#include "pelajaran.h"
+
+pelajaran create_pelajaran(string namaMapel, string kodepel) {
+    pelajaran p;
+    p.namaMapel = namaMapel;  
+    p.kodeMapel = kodepel;
+    return p;
+}
+
+void tampil_pelajaran(pelajaran pel) { 
+    cout << "nama pelajaran : " << pel.namaMapel << endl;
+    cout << "nilai : " << pel.kodeMapel << endl;
+}
+
+### pelajaran.cpp
+```C++
+source code unguided 4
+```
+#include <iostream>
+#include "pelajaran.h"
+using namespace std;
+
+int main() {
+    string namapel = "Struktur Data";
+    string kodepel = "STD";
+
+    pelajaran pel = create_pelajaran(namapel, kodepel);
+    tampil_pelajaran(pel);
+
+    return 0;
+}
+
+### Output Unguided 2 :
+##### Output 1
+![Screenshotlatihan1_2](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/pertemuanke3_modulke3/outputunguided2_1.png)
+
+penjelasan unguided 2
+menunjukkan praktik pemisahan kode pelajaran.h berisi deklarasi struct pelajaran dan prototipe fungsi, sedangkan pelajaran.cpp berisi implementasi lengkap dari fungsi create_pelajaran (untuk membuat objek struct) dan prosedur tampil_pelajaran (untuk menampilkan data), di mana file main Guided pelajaran.h, pelajaran.cpp, main.cpp bertindak sebagai driver yang memanggil fungsi-fungsi yang telah diimplementasikan tersebut.
+
+### 3. (isi dengan soal unguided 3)
+```C++
+source code unguided 3
+```
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+const int SIZE = 3;
+
+void tampilkanArray(const int arr[SIZE][SIZE], const string& nama) {
+    cout << " " << nama << " " << endl;
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            cout << setw(4) << arr[i][j];
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+void tukarIsiArrayPosisi(int arrA[SIZE][SIZE], int arrB[SIZE][SIZE], 
+                        int brs1, int kol1, int brs2, int kol2) {
+    
+    int temp = arrA[brs1][kol1];
+    arrA[brs1][kol1] = arrB[brs2][kol2];
+    arrB[brs2][kol2] = temp;
+}
+
+void tukarNilaiPointer(int *ptrA, int *ptrB) {
+    int temp = *ptrA;
+    *ptrA = *ptrB;
+    *ptrB = temp;
+}
+
+int main() {
+    int arrayA[SIZE][SIZE] = {{1, 2, 3},
+                              {4, 5, 6},
+                              {7, 8, 9}};
+                                
+    int arrayB[SIZE][SIZE] = {{10, 20, 30},
+                              {40, 50, 60},
+                              {70, 80, 90}};
+    
+    int nilaiP = 100;
+    int nilaiQ = 200;
+    
+    int *ptrP = &nilaiP; 
+    int *ptrQ = &nilaiQ;
+    
+    tampilkanArray(arrayA, "Array A (Awal)");
+    tampilkanArray(arrayB, "Array B (Awal)");
+
+    cout << "Menukar" << endl;
+    tukarIsiArrayPosisi(arrayA, arrayB, 2, 0, 0, 1);
+
+    tampilkanArray(arrayA, "Array A (Akhir)"); 
+    tampilkanArray(arrayB, "Array B (Akhir)"); 
+
+    cout << "POINTER" << endl;
+    cout << "Awal: Nilai P = " << nilaiP << ", Nilai Q = " << nilaiQ << endl;
+    
+    tukarNilaiPointer(ptrP, ptrQ);
+
+    cout << "Akhir: Nilai P = " << nilaiP << ", Nilai Q = " << nilaiQ << endl;
+    
+    return 0;
+}
+### Output Unguided 3 :
+
+##### Output 1
+![Screenshotlatihan1_2](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/pertemuanke3_modulke3/outputunguided3_1.png)
+
+##### Output 2
+![Screenshotlatihan1_2](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/pertemuanke3_modulke3/outputunguided3_2.png)
+
+penjelasan unguided 3
+menggunakan dua array 2D (3x3) dan dua pointer integer untuk mendemonstrasikan pertukaran data: satu prosedur menukarkan nilai antara dua array 2D pada posisi tertentu, dan prosedur lainnya menukarkan nilai dari dua variabel (int) secara tidak langsung menggunakan pointer (*ptr).
+
+## Kesimpulan
+kesimpulannya berfokus pada penerapan konsep dasar Abstract Data Type (ADT) dan pengelolaan memori dengan array dan pointer sebagai fundamental penting dalam mata kuliah Struktur Data.
+## Referensi
+[1]Seshadri, P., Livny, M., & Ramakrishnan, R. (1997). The case for enhanced abstract data types. Cornell University.
+<br>
