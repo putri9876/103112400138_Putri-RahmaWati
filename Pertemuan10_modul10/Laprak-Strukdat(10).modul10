@@ -1,0 +1,812 @@
+# <h1 align="center">Laporan Praktikum Modul 10- Tree </h1>
+<p align="center">Putri Rahma Wati - 103112400138
+
+## Dasar Teori
+Tree adalah struktur data non-linier yang menyusun data secara hierarkis, di mana setiap node menyimpan nilai dan referensi ke node anak (child), dengan node paling atas disebut root, node tanpa anak disebut leaf, dan node dengan setidaknya satu anak disebut internal node [Trivusi, 2022]. Tree memiliki konsep edge sebagai penghubung antar node, subtree sebagai bagian tree yang dimulai dari node tertentu, depth sebagai kedalaman node dari root, dan height sebagai panjang jalur terpanjang dari root ke leaf terdalam. Salah satu jenis populer adalah Binary Tree, di mana setiap node memiliki maksimal dua child (left dan right), dan varian khususnya adalah Binary Search Tree (BST) yang mengatur nilai sehingga node kiri lebih kecil dan node kanan lebih besar dari induk, sehingga operasi pencarian, penyisipan, penghapusan, serta traversal (preorder, inorder, postorder) menjadi lebih efisien [1]. “Implementasi Teknik Binary Search Tree pada Pencarian Data Penduduk” menunjukkan penerapan BST untuk mengelola dan mencari data penduduk secara efisien. Dalam implementasi tersebut, setiap data penduduk disimpan sebagai node pada tree, di mana node kiri menyimpan data lebih kecil dan node kanan menyimpan data lebih besar dari node induk, sesuai aturan BST. Dengan struktur ini, pencarian data spesifik menjadi lebih cepat dibandingkan pencarian linear, karena tree memungkinkan pemangkasan jalur pencarian secara hierarkis. Konsep node root, child, leaf, serta subtree digunakan untuk menavigasi data, sementara traversal inorder, preorder, dan postorder dapat digunakan untuk menampilkan data secara urut atau sesuai kebutuhan. Studi ini relevan dengan praktikum, karena mengilustrasikan bagaimana BST tidak hanya teori, tetapi juga dapat diaplikasikan untuk pengelolaan data nyata, serta menekankan pentingnya alokasi node, penghitungan ukuran tree, dan kedalaman (height) tree untuk memahami struktur data secara menyeluruh [Implementasi Teknik Binary Search Tree, 2022].[2]
+
+
+## Guided 
+
+### 1. ...Binary Search Tree (BST)
+
+```C++
+source code guided 1
+```bst.cpp
+#include "bst.h"
+#include <iostream>
+
+using namespace std;
+
+//NOTE : parameter tree disini maksudnya merujuk ke node; baik itu node root atau node lain dari tree
+
+bool isEmpty(BinTree tree){
+    if(tree == Nil){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+void createTree(BinTree &tree){
+    tree = Nil;
+}
+
+node alokasi(int angkaInput){
+    node nodeBaru = new BST;
+    nodeBaru->angka = angkaInput;
+    nodeBaru->left = Nil;
+    nodeBaru->right = Nil;
+    return nodeBaru;
+}
+
+void dealokasi(node nodeHapus){
+    delete nodeHapus;
+}
+
+void insertNode(BinTree &tree, node nodeBaru){
+    if(tree == Nil){
+        tree = nodeBaru;
+        cout << "Node " << nodeBaru->angka << " berhasil ditambahkan ke dalam tree!" << endl;
+        return;
+    } else if(nodeBaru->angka < tree->angka){
+        insertNode(tree->left, nodeBaru);
+    } else if(nodeBaru->angka > tree->angka){
+        insertNode(tree->right, nodeBaru);
+    }
+}
+
+void searchByData(BinTree tree, int angkaCari){
+    if(isEmpty(tree) == true){
+        cout << "Tree kosong!" << endl;
+    } else {
+        node nodeBantu = tree;
+        node parent = Nil;
+        bool ketemu = false;
+        while(nodeBantu != Nil){
+            if(angkaCari < nodeBantu->angka){
+                parent = nodeBantu;
+                nodeBantu = nodeBantu->left;
+            } else if(angkaCari > nodeBantu->angka){
+                parent = nodeBantu;
+                nodeBantu = nodeBantu->right;
+            } else if(angkaCari == nodeBantu->angka){
+                ketemu = true;
+                break;
+            }
+        }
+        if(ketemu == false){
+            cout << "Data tidak ditemukan" << endl;
+        } else if(ketemu == true){
+            cout << "Data ditemukan didalam tree!" << endl;
+            cout << "Data Angka : " << nodeBantu->angka << endl;
+
+            //menampilkan parentnya & pengecekan sibling
+            node sibling = Nil;
+            if(parent != Nil){
+                cout << "Parent : " << parent->angka << endl;
+                if(parent->left == nodeBantu){
+                    sibling = parent->right;
+                } else if(parent->right == nodeBantu){
+                    sibling = parent->left;
+                }
+            } else {
+                cout << "Parent : - (node root)"<< endl;
+            }
+
+            //menampilkan siblingnya
+            if(sibling != Nil){
+                cout << "Sibling : " << sibling->angka << endl;
+            } else {
+                cout << "Sibling : - " << endl;
+            }
+
+            //menampilkan childnya
+            if(nodeBantu->left != Nil){
+                cout << "Child kiri : " << nodeBantu->left->angka << endl;
+            } else if(nodeBantu->left == Nil){
+                cout << "Child kiri : -" << endl;
+            }
+            if(nodeBantu->right != Nil){
+                cout << "Child kanan : " << nodeBantu->right->angka << endl;
+            } else if(nodeBantu->right == Nil){
+                cout << "Child kanan : -" << endl;
+            }
+        }
+    }
+}
+
+void preOrder(BinTree tree){ //tengah - kiri - kanan atau root - child kiri - child kanan
+    if(tree == Nil){
+        return;
+    }
+    cout << tree->angka << " - ";
+    preOrder(tree->left);
+    preOrder(tree->right);
+}
+
+void inOrder(BinTree tree){ //kiri - tengah - kanan atau child kiri - root - child kanan
+    if(tree == Nil){
+        return;
+    }
+    inOrder(tree->left);
+    cout << tree->angka << " - ";
+    inOrder(tree->right);
+}
+
+void postOrder(BinTree tree){ //kiri - kanan - tengah atau child kiri - child kanan - root
+    if(tree == Nil){
+        return;
+    }
+    postOrder(tree->left);
+    postOrder(tree->right);
+    cout << tree->angka << " - ";
+}
+
+
+
+bool deleteNode(BinTree &tree, int angka) {
+    if (tree == Nil) {
+        return false; //data tidak ditemukan di subtree ini
+    } else {
+        if (angka < tree->angka) {
+            return deleteNode(tree->left, angka);
+        } else if (angka > tree->angka) {
+            return deleteNode(tree->right, angka);
+        } else {
+            //jika node yang mau dihapus ditemukan
+            //Case 1 : node yang mau dihapus adalah leaf
+            if (tree->left == Nil && tree->right == Nil) {
+                node tmp = tree;
+                tree = Nil;
+                dealokasi(tmp);
+            }
+            //Case 2 : node yang mau dihapus hanya punya right child
+            else if (tree->left == Nil) {
+                node tmp = tree;
+                tree = tree->right;
+                dealokasi(tmp);
+            }
+            //Case 3 : node yang mau dihapus hanya punya left child
+            else if (tree->right == Nil) {
+                node tmp = tree;
+                tree = tree->left;
+                dealokasi(tmp);
+            }
+            // Case 4 : jika node yang mau dihapus punya dua child, maka ambil mostleft dari subtree kanan untuk menggantikan node yang mau dihapus
+            else {
+                //mostleft dari subtree kanan = node successor (node penerus)
+                node successor = mostLeft(tree->right);
+                //salin data successor ke node saat ini
+                tree->angka = successor->angka;
+                //hapus successor pada subtree kanan
+                return deleteNode(tree->right, successor->angka);
+            }
+            return true; //berhasil dihapus
+        }
+    }
+}
+
+node mostRight(BinTree tree){
+    while (tree->right != Nil){
+        tree = tree->right;
+    }
+    return tree;    
+}
+
+node mostLeft(BinTree tree){
+    while (tree->left != Nil){
+        tree = tree->left;
+    }
+    return tree;
+}
+
+void deleteTree(BinTree &tree){
+    if(tree == Nil){
+        return;
+    } else {
+        deleteTree(tree->left);
+        deleteTree(tree->right);
+        dealokasi(tree);
+        tree = Nil;
+    }
+}
+
+int size(BinTree tree){ //mengembalikan jumlah semua node
+    if(isEmpty(tree) == true){
+        return 0;
+    } else {
+        return 1 + size(tree->left) + size(tree->right);
+    }
+    cout << endl;
+}
+
+int height(BinTree tree){ //mengembalikan jumlah level tree
+    if(isEmpty(tree) == true){
+        return -1; //tree kosong jika height = -1
+    } else {
+        int hl = height(tree->left);
+        int hr = height(tree->right);
+        int maxHeight;
+        if (hl > hr){
+            maxHeight = hl;
+        } else {
+            maxHeight = hr;
+        }
+        return 1 + maxHeight;
+    }
+    cout << endl;
+}
+
+bst.h
+#ifndef BST_H
+#define BST_H
+#define Nil NULL 
+
+using namespace std;
+
+typedef struct  BST *node; //alias pointer =node
+
+struct BST{ //nama struct nya BST
+    int angka;
+    node left;
+    node right;
+};
+
+typedef node BinTree; // alias tree = BinTree (merujuk ke node root dari BST)
+
+bool isEmpty(BinTree tree);
+void createTree(BinTree &tree);
+node alokasi(int angka);
+void dealokasi(node nodeHapus);
+
+void insertNode(BinTree &tree, node nodeBaru);
+void searchByData(BinTree tree, int angka);
+void preOrder(BinTree tree);
+void inOrder(BinTree tree);
+void postOrder(BinTree tree);
+
+bool deleteNode(BinTree &tree, int angka);
+node mostRight(BinTree tree);
+node mostLeft(BinTree tree);
+void deleteTree(BinTree &tree);
+int size(BinTree tree);
+int height(BinTree tree);
+
+#endif
+
+main.cpp
+#include <iostream>
+#include "bst.h"
+
+using namespace std;
+
+int main() {
+    BinTree tree;
+    createTree(tree);
+
+    int pilih, angka;
+
+    do {
+        cout << "========= MENU BST =========" << endl;
+        cout << "1. Insert Node" << endl;
+        cout << "2. Delete Node" << endl;
+        cout << "3. Search Data" << endl;
+        cout << "4. Tampilkan PreOrder" << endl;
+        cout << "5. Tampilkan InOrder" << endl;
+        cout << "6. Tampilkan PostOrder" << endl;
+        cout << "7. Size Tree (jumlah node)" << endl;
+        cout << "8. Height Tree (tinggi level)" << endl;
+        cout << "9. Tampilkan mostright" << endl;
+        cout << "10. Tampilkan mostleft" << endl;
+        cout << "11. Delete Seluruh Tree" << endl;
+        cout << "0. Keluar" << endl;
+        cout << "pilihan anda : ";
+        cin >> pilih;
+        cout << endl;
+
+        switch (pilih){
+        case 1:
+            cout << "Masukkan angka: ";
+            cin >> angka;
+            insertNode(tree, alokasi(angka));
+            cout << endl;
+            break;
+
+        case 2:
+            if(isEmpty(tree) == true){
+                cout << "Tree kosong!" << endl;
+            } else {
+                cout << "Masukkan angka yang ingin dihapus: ";
+                cin >> angka;
+                if(deleteNode(tree, angka)){
+                    cout << "Data " << angka << " berhasil dihapus!" << endl;
+                } else {
+                    cout << "Data " << angka << " tidak ditemukan!" << endl;
+                }
+            }
+            cout << endl;
+            break;
+
+        case 3:
+            if(isEmpty(tree) == true){
+                cout << "Tree kosong!" << endl;
+            } else {
+                cout << "Masukkan angka yang ingin dicari: ";
+                cin >> angka;
+                searchByData(tree, angka);
+            }
+            cout << endl;
+            break;
+
+        case 4:
+            if(isEmpty(tree) == true){
+                cout << "Tree kosong!" << endl;
+            } else {
+                cout << "PreOrder : ";
+                preOrder(tree);
+                cout << endl;
+            }
+            cout << endl;
+            break;
+
+        case 5:
+            if(isEmpty(tree) == true){
+                cout << "Tree kosong!" << endl;
+            } else {
+                cout << "InOrder : ";
+                inOrder(tree);
+                cout << endl;
+            }
+            cout << endl;
+            break;
+
+        case 6:
+            if(isEmpty(tree) == true){
+                cout << "Tree kosong!" << endl;
+            } else {
+                cout << "PostOrder : ";
+                postOrder(tree);
+                cout << endl;
+            }
+            cout << endl;
+            break;
+
+        case 7:
+            cout << "Size Tree = " << size(tree) << endl;
+            cout << endl;
+            break;
+
+        case 8:
+            cout << "Height Tree = " << height(tree) << endl;
+            cout << endl;
+            break;
+
+        case 9: 
+            if(isEmpty(tree) == true){
+                cout << "Tree kosong!" << endl;
+                cout << endl;
+            } else {
+                cout << "Mostright : " << mostRight(tree)->angka << endl;
+                cout << endl;
+            }
+            break;
+        
+        case 10:
+            if(isEmpty(tree) == true){
+                cout << "Tree kosong!" << endl;
+                cout << endl;
+            } else {
+                cout << "Mostleft : " << mostLeft(tree)->angka << endl;
+                cout << endl;
+            }
+            break;
+
+        case 11:
+            if(isEmpty(tree) == true){
+                cout << "Tree kosong!" << endl;
+            } else {
+                deleteTree(tree);
+                cout << "Seluruh tree berhasil dihapus!" << endl;
+            }
+            cout << endl;
+            break;
+
+        case 0:
+            cout << "Keluar dari program..." << endl;
+            break;
+
+        default:
+            cout << "Pilihan tidak valid!" << endl;
+            break;
+        }
+
+    } while (pilih != 0);
+
+    return 0;
+}
+penjelasan singkat guided 1
+Program ini mencakup operasi dasar seperti insert, search, traversal (preorder, inorder, postorder), delete node, dan menghitung ukuran serta tinggi tree. BST memastikan elemen di subtree kiri lebih kecil dan di subtree kanan lebih besar dari node root, sehingga pencarian menjadi lebih efisien dibandingkan struktur data linear[1][2]. Program juga menampilkan informasi parent, sibling, dan child dari node yang dicari, sehingga memudahkan pemahaman struktur tree secara visual.
+## Unguided 
+
+### 1. Buatlah ADT Binary Search Tree menggunakan Linked list sebagai berikut di dalam file
+ “bstree.h”:
+```C++
+source code unguided 1
+```bstree.cpp
+#include <iostream>
+#include "bstree.h"
+using namespace std;
+
+address alokasi(infotype x){
+    address P = new Node;
+    if(P != Nil){
+        P->info = x;
+        P->left = Nil;
+        P->right = Nil;
+    }
+    return P;
+}
+
+void insertNode(address &root, infotype x){
+    if(root == Nil){
+        root = alokasi(x);
+    } else {
+        if(x < root->info){
+            insertNode(root->left, x);
+        } 
+        else if(x > root->info){
+            insertNode(root->right, x);
+        }
+    }
+}
+
+void printInorder(address root){
+    if(root != Nil){
+        printInorder(root->left);
+        cout << root->info << "-";
+        printInorder(root->right);
+    }
+}
+
+bstree.h
+#ifndef BSTREE_H
+#define BSTREE_H
+#define Nil NULL
+
+typedef int infotype;
+typedef struct Node *address;
+
+struct Node {
+    infotype info;
+    address left;
+    address right;
+};
+
+address alokasi(infotype x);
+void insertNode(address &root, infotype x);
+void printInorder(address root);
+
+#endif
+
+main.cpp
+#include <iostream>
+#include "bstree.h"
+
+using namespace std;
+
+int main() {
+    cout << "Hello world!" << endl;
+
+    address root = Nil;
+
+    insertNode(root,1);
+    insertNode(root,2);
+    insertNode(root,6);
+    insertNode(root,4);
+    insertNode(root,5);
+    insertNode(root,3);
+    insertNode(root,6); 
+    insertNode(root,7);
+
+    printInorder(root);
+    cout << endl;
+
+    return 0;
+}
+
+### Output Unguided 1 :
+
+##### Output 1
+![Screenshot Output Unguided 1_1](https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/Pertemuan10_modul10/unguided1_1.png)
+
+penjelasan unguided 1 
+Program menambahkan node baru sesuai aturan BST dan menampilkan elemen tree secara urut (inorder traversal), sehingga output menunjukkan susunan ascending dari nilai node. Tidak ada penanganan duplikat atau operasi delete dalam latihan ini, fokus utama adalah pemahaman dasar alokasi node dan traversal tree.
+### 2. Buatlah fungsi untuk menghitung jumlah node dengan fungsi berikut.
+ ➢ fungsihitungJumlahNode( root:address ) : integer
+ /* fungsi mengembalikan integer banyak node yang ada di dalam BST*/
+ ➢ fungsihitungTotalInfo( root:address, start:integer ) : integer
+ /* fungsi mengembalikan jumlah (total) info dari node-node yang ada di dalam BST*/
+ ➢ fungsihitungKedalaman( root:address, start:integer ) : integer
+ 88
+ STRUKTUR DATA
+/* fungsi rekursif mengembalikan integer kedalaman maksimal dari binary tree */
+
+```C++
+source code unguided 2
+```bstree.cpp
+#include <iostream>
+#include "bstree.h"
+using namespace std;
+
+address alokasi(infotype x){
+    address P = new Node;
+    if(P != Nil){
+        P->info = x;
+        P->left = Nil;
+        P->right = Nil;
+    }
+    return P;
+}
+
+void insertNode(address &root, infotype x){
+    if(root == Nil){
+        root = alokasi(x);
+    }
+    else {
+        if(x < root->info)
+            insertNode(root->left, x);
+        else if(x > root->info)
+            insertNode(root->right, x);
+        else
+            return; 
+    }
+}
+
+void printInorder(address root){
+    if(root != Nil){
+        printInorder(root->left);
+        cout << root->info << "-";
+        printInorder(root->right);
+    }
+}
+
+int hitungNode(address root){
+    if(root == Nil)
+        return 0;
+    return 1 + hitungNode(root->left) + hitungNode(root->right);
+}
+
+int hitungTotal(address root){
+    if(root == Nil)
+        return 0;
+    return root->info + hitungTotal(root->left) + hitungTotal(root->right);
+}
+
+int hitungKedalaman(address root, int level){
+    if(root == Nil)
+        return level;
+
+    int leftDepth  = hitungKedalaman(root->left, level + 1);
+    int rightDepth = hitungKedalaman(root->right, level + 1);
+
+    return (leftDepth > rightDepth ? leftDepth : rightDepth);
+}
+
+bstree.h
+#ifndef BSTREE_H
+#define BSTREE_H
+#define Nil NULL
+
+typedef int infotype;
+typedef struct Node *address;
+
+struct Node {
+    infotype info;
+    address left;
+    address right;
+};
+
+address alokasi(infotype x);
+void insertNode(address &root, infotype x);
+void printInorder(address root);
+
+int hitungNode(address root);
+int hitungTotal(address root);
+int hitungKedalaman(address root, int level);
+
+#endif
+
+main.cpp
+#include <iostream>
+#include "bstree.h"
+
+using namespace std;
+
+int main() {
+    cout << "Hello world!" << endl;
+
+    address root = Nil;
+
+    insertNode(root,1);
+    insertNode(root,2);
+    insertNode(root,6);
+    insertNode(root,4);
+    insertNode(root,5);
+    insertNode(root,3);
+    insertNode(root,6); 
+    insertNode(root,7);
+
+    printInorder(root);
+    cout << endl;
+
+    cout << "kedalaman : " << hitungKedalaman(root,0) << endl;
+    cout << "jumlah node : " << hitungNode(root) << endl;
+    cout << "total : " << hitungTotal(root) << endl;
+
+    return 0;
+}
+
+### Output Unguided 2 :
+
+##### Output 1
+![Screenshot Output Unguided 2_1]https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/Pertemuan10_modul10/unguided2_1.png)
+
+penjelasan unguided 2
+dari program no satu kita menambahkan fitur hitung jumlah node, total nilai node, dan kedalaman tree. Dengan menambahkan fungsi rekursif ini, mahasiswa dapat memahami analisis struktur tree secara kuantitatif, misalnya menghitung berapa banyak node, total nilai, dan seberapa dalam tree tersebut hingga level terdalam.
+### 3.  Print tree secara pre-order dan post-order
+
+```C++
+source code unguided 3
+```bstree.cpp
+#include <iostream>
+#include "bstree.h"
+using namespace std;
+
+
+address alokasi(infotype x){
+    address P = new Node;
+    if(P != Nil){
+        P->info = x;
+        P->left = Nil;
+        P->right = Nil;
+    }
+    return P;
+}
+
+void insertNode(address &root, infotype x){
+    if(root == Nil){
+        root = alokasi(x);
+    } else {
+        if(x < root->info)
+            insertNode(root->left, x);
+        else if(x > root->info)
+            insertNode(root->right, x);
+    }
+}
+
+void printInorder(address root){
+    if(root != Nil){
+        printInorder(root->left);
+        cout << root->info << "-";
+        printInorder(root->right);
+    }
+}
+
+
+int hitungNode(address root){
+    if(root == Nil) return 0;
+    return 1 + hitungNode(root->left) + hitungNode(root->right);
+}
+
+int hitungTotal(address root){
+    if(root == Nil) return 0;
+    return root->info + hitungTotal(root->left) + hitungTotal(root->right);
+}
+
+int hitungKedalaman(address root, int level){
+    if(root == Nil) return level;
+
+    int leftD  = hitungKedalaman(root->left, level+1);
+    int rightD = hitungKedalaman(root->right, level+1);
+
+    return (leftD > rightD ? leftD : rightD);
+}
+
+
+void printPreOrder(address root){
+    if(root != Nil){
+        cout << root->info << "-";
+        printPreOrder(root->left);
+        printPreOrder(root->right);
+    }
+}
+
+void printPostOrder(address root){
+    if(root != Nil){
+        printPostOrder(root->left);
+        printPostOrder(root->right);
+        cout << root->info << "-";
+    }
+}
+
+bstree.h
+#ifndef BSTREE_H
+#define BSTREE_H
+#define Nil NULL
+
+typedef int infotype;
+typedef struct Node *address;
+
+struct Node {
+    infotype info;
+    address left;
+    address right;
+};
+
+address alokasi(infotype x);
+void insertNode(address &root, infotype x);
+void printInorder(address root);
+
+int hitungNode(address root);
+int hitungTotal(address root);
+int hitungKedalaman(address root, int level);
+
+void printPreOrder(address root);
+void printPostOrder(address root);
+
+#endif
+
+main.cpp
+#include <iostream>
+#include "bstree.h"
+
+using namespace std;
+
+int main() {
+    cout << "Hello world!" << endl;
+
+    address root = Nil;
+
+    insertNode(root,1);
+    insertNode(root,2);
+    insertNode(root,6);
+    insertNode(root,4);
+    insertNode(root,5);
+    insertNode(root,3);
+    insertNode(root,6); 
+    insertNode(root,7);
+
+    cout << "InOrder     : ";
+    printInorder(root);
+    cout << endl;
+
+    cout << "PreOrder    : ";
+    printPreOrder(root);
+    cout << endl;
+
+    cout << "PostOrder   : ";
+    printPostOrder(root);
+    cout << endl;
+
+    cout << "kedalaman : " << hitungKedalaman(root,0) << endl;
+    cout << "jumlah node : " << hitungNode(root) << endl;
+    cout << "total : " << hitungTotal(root) << endl;
+
+    return 0;
+}
+
+### Output Unguided 3 :
+
+##### Output 1
+![Screenshot Output Unguided 3_1] https://github.com/putri9876/103112400138_Putri-RahmaWati/blob/main/Pertemuan10_modul10/unguided3_1.png)
+ 
+penjelasan unguided 3
+
+## Kesimpulan
+...dapat disimpulkan bahwa Binary Search Tree (BST) merupakan struktur data yang efektif untuk menyimpan dan mengatur data secara terurut, sehingga memudahkan operasi pencarian, penambahan, dan penghapusan node. Implementasi BST dengan operasi traversal (preorder, inorder, postorder) memungkinkan pengguna memahami urutan akses node yang berbeda-beda. Selain itu, penghitungan ukuran tree, tinggi tree, serta pencarian node beserta informasi parent, sibling, dan child membantu dalam memahami struktur dan hubungan antar node dalam tree secara visual. Praktikum ini juga menekankan pentingnya manajemen memori melalui alokasi dan dealokasi node untuk menjaga efisiensi program.
+
+## Referensi
+[1] https://www.trivusi.web.id/2022/07/struktur-data-tree.html 
+<br>[2] 
+https://share.google/x5JYAxEztG3tjdRVg
+<br>...
